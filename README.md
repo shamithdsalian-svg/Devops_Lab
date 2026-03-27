@@ -1,13 +1,24 @@
-# Calculator App
+# 🧮 Calculator App
 
-This is a simple calculator built using Python.
+A simple calculator built using Python. This project demonstrates basic arithmetic operations and Git workflow.
 
-## Features
+---
+
+## 🚀 Features
 - Addition
 - Subtraction
 - Multiplication
 - Division
+- User input support
 
-## How to Run
+---
+
+## 🛠️ Technologies Used
+- Python
+- Git & GitHub
+
+---
+
+## ▶️ How to Run
 ```bash
 py app.py
