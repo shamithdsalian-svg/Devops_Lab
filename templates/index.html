@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculator</title>
+
+    <style>
+        body {
+            background: #1e1e1e;
+            color: white;
+            font-family: Arial;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .calculator {
+            background: #2d2d2d;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            font-size: 20px;
+            margin-bottom: 10px;
+            border: none;
+            background: #3c3f41;
+            color: white;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 60px);
+            gap: 10px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            background: #444;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #555;
+        }
+
+        .equal {
+            background: #4CAF50;
+        }
+
+        .clear {
+            background: #f44336;
+        }
+
+        .history {
+            margin-top: 15px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="calculator">
+
+    <form method="POST">
+        <input type="text" id="display" name="expression" readonly>
+
+        <div class="buttons">
+            <button type="button" onclick="press('7')">7</button>
+            <button type="button" onclick="press('8')">8</button>
+            <button type="button" onclick="press('9')">9</button>
+            <button type="button" onclick="press('/')">/</button>
+
+            <button type="button" onclick="press('4')">4</button>
+            <button type="button" onclick="press('5')">5</button>
+            <button type="button" onclick="press('6')">6</button>
+            <button type="button" onclick="press('*')">*</button>
+
+            <button type="button" onclick="press('1')">1</button>
+            <button type="button" onclick="press('2')">2</button>
+            <button type="button" onclick="press('3')">3</button>
+            <button type="button" onclick="press('-')">-</button>
+
+            <button type="button" onclick="press('0')">0</button>
+            <button type="button" onclick="press('.')">.</button>
+            <button type="submit" class="equal">=</button>
+            <button type="button" onclick="press('+')">+</button>
+
+            <button type="button" class="clear" onclick="clearDisplay()">C</button>
+        </div>
+    </form>
+
+    <h3>{{ result }}</h3>
+
+    <div class="history">
+        <h4>History</h4>
+        {% for item in history %}
+            <p>{{ item }}</p>
+        {% endfor %}
+    </div>
+
+</div>
+
+<script>
+    function press(value) {
+        document.getElementById("display").value += value;
+    }
+
+    function clearDisplay() {
+        document.getElementById("display").value = "";
+    }
+</script>
+
+</body>
+</html>
