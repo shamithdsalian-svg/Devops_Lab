@@ -1,8 +1,19 @@
+# 📌 Utility Functions
 def format_result(result):
     """Remove .0 if result is whole number"""
     return int(result) if isinstance(result, float) and result.is_integer() else result
 
 
+def get_number(prompt):
+    """Safe input for numbers"""
+    while True:
+        try:
+            return float(input(prompt))
+        except ValueError:
+            print("Invalid input! Please enter a valid number.")
+
+
+# 📌 Calculator Operations
 def add(a, b):
     return a + b
 
@@ -21,17 +32,33 @@ def divide(a, b):
     return a / b
 
 
-# 🔥 Load history from file
-history = []
+# 📂 File Handling Functions
+def load_history():
+    history = []
+    try:
+        with open("history.txt", "r") as file:
+            for line in file:
+                history.append(line.strip())
+    except FileNotFoundError:
+        pass
+    return history
 
-try:
-    with open("history.txt", "r") as file:
-        for line in file:
-            history.append(line.strip())
-except FileNotFoundError:
-    pass
+
+def save_to_file(entry):
+    with open("history.txt", "a") as file:
+        file.write(entry + "\n")
 
 
+def clear_file():
+    with open("history.txt", "w") as file:
+        pass
+
+
+# 🔥 Load history
+history = load_history()
+
+
+# 🔄 Main Program Loop
 while True:
     print("\n===== Simple Calculator =====")
     print("1. Add")
@@ -48,7 +75,7 @@ while True:
         print("Exiting...")
         break
 
-    # 🔥 Show history (improved)
+    # 📜 Show History
     if choice == '5':
         if not history:
             print("History is empty.")
@@ -58,11 +85,10 @@ while True:
                 print(f"{i}. {item}")
         continue
 
-    # 🔥 Clear history
+    # 🧹 Clear History
     if choice == '6':
         history.clear()
-        with open("history.txt", "w") as file:
-            pass
+        clear_file()
         print("History cleared!")
         continue
 
@@ -70,33 +96,33 @@ while True:
         print("Invalid choice! Please try again.")
         continue
 
-    # 🔥 Input validation
-    try:
-        num1 = float(input("Enter first number: "))
-        num2 = float(input("Enter second number: "))
-    except ValueError:
-        print("Invalid input! Please enter numbers only.")
-        continue
+    # 🔢 Input Numbers
+    num1 = get_number("Enter first number: ")
+    num2 = get_number("Enter second number: ")
 
-    # 🔥 Perform operation
+    # ⚙️ Perform Operation
     if choice == '1':
         result = add(num1, num2)
+        operation = "+"
     elif choice == '2':
         result = subtract(num1, num2)
+        operation = "-"
     elif choice == '3':
         result = multiply(num1, num2)
+        operation = "*"
     elif choice == '4':
         result = divide(num1, num2)
+        operation = "/"
 
-    # 🔥 Format result
+    # 🎯 Format Result
     if isinstance(result, (int, float)):
         result = format_result(result)
 
     print("Result:", result)
 
-    # 🔥 Save to history
-    history.append(str(result))
+    # 📝 Store Full Expression in History
+    history_entry = f"{format_result(num1)} {operation} {format_result(num2)} = {result}"
+    history.append(history_entry)
 
-    # 🔥 Save to file
-    with open("history.txt", "a") as file:
-        file.write(str(result) + "\n")
+    # 💾 Save to File
+    save_to_file(history_entry)
